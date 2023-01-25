@@ -15,11 +15,11 @@ type StorageConfig struct {
 	Port     string `json:"port"`
 	Username string `json:"username"`
 	Password string `json:"password"`
-	DBName   string `json:"DBName"`
+	DBName   string `json:"database"`
 }
 
 func NewPostgresDB(cfg StorageConfig, ctx context.Context, maxAttempts int) (pool *pgxpool.Pool, err error) {
-	dsn := fmt.Sprintf("postgresql://%s:%s@%s:%s/%s", cfg.Username, cfg.Password, cfg.Port, cfg.DBName)
+	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", cfg.Username, cfg.Password, cfg.Port, cfg.DBName)
 	utils.DoWithTries(func() error {
 		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 		defer cancel()

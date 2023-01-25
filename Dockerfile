@@ -1,13 +1,28 @@
-FROM golang:1.16-alpine
+FROM golang:1.19 AS builder
+
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64
 
 WORKDIR /app
 
-COPY go.mod ./
-COPY go.sum ./
-
+COPY go.mod .
+COPY go.sum .
 RUN go mod download
 
-COPY *.go ./
+COPY . .
 
-RUN go build -o /EFpr
+RUN go build -o /app/main
 
+CMD [ "/main" ]
+
+FROM alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/main /app/main
+
+EXPOSE 12345
+
+CMD ["/app/main"]
