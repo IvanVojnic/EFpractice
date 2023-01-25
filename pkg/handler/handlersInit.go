@@ -32,9 +32,8 @@ func NewHandler(services *service.Service) *Handler {
 	}
 }*/
 
-func (h *Handler) InitRoutes() *echo.Echo {
+func (h *Handler) InitRoutes(router *echo.Echo) *echo.Echo {
 
-	router := echo.New()
 	router.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "hello world")
 	})
@@ -49,5 +48,6 @@ func (h *Handler) InitRoutes() *echo.Echo {
 	rAct.POST("/update", h.updateUser)
 	rAct.GET("/delete", h.deleteUser)
 	rAct.GET("/getAllUser", h.getAllUsers)
+	router.Start(":3000")
 	return router
 }

@@ -1,6 +1,6 @@
 storage:
   host: localhost
-  port: 5433
+  port: 5432
   database: postgres
   username: postgres
-  password: vojnic
+  password: qwerty

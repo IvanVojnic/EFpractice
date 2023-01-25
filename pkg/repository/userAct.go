@@ -2,14 +2,14 @@ package repository
 
 import (
 	"EFpractic2/models"
-	"github.com/jmoiron/sqlx"
+	"github.com/jackc/pgx/v4/pgxpool"
 )
 
 type UserActPostgres struct {
-	db *sqlx.DB
+	db *pgxpool.Pool
 }
 
-func NewUserActPostgres(db *sqlx.DB) *UserActPostgres {
+func NewUserActPostgres(db *pgxpool.Pool) *UserActPostgres {
 	return &UserActPostgres{db: db}
 }
 
