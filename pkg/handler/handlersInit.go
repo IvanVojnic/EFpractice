@@ -43,6 +43,10 @@ func (h *Handler) InitRoutes(router *echo.Echo) *echo.Echo {
 		Format: `[${time_rfc3339} ${host} ${method}]`,
 	}))
 
+	router.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "hello worl")
+	})
+
 	rAct.POST("/create", h.createUser)
 	rAct.GET("/get", h.getUser)
 	rAct.POST("/update", h.updateUser)

@@ -9,28 +9,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-/*type (
-	Config struct {
-		CurrentDB   string `env:"CURRENT_DB,notEmpty" envDefault:"postgres"`
-		PostgresUrl string `env:"POSTGRES_DB_URL,notEmpty"`
-		MongoURL    string `env:"MONGO_DB_URL,notEmpty"`
-		JwtKey      string `env:"JWT_KEY,notEmpty"`
-	}
-)
-
-func NewConfig() (*Config, error) {
-	Cfg := &Config{}
-	if err := env.Parse(Cfg); err != nil {
-		return nil, fmt.Errorf("config - NewConfig: %v", err)
-	}
-
-	//Cfg.CurrentDB = "postgres"
-	//Cfg.PostgresUrl = "postgres://postgres:postgres@host.docker.internal:5432/entity?sslmode=disable"
-	//Cfg.MongoURL = "_"
-	//Cfg.JwtKey = "874967EC3EA3490F8F2EF6478B72A756"
-	return Cfg, nil
-}*/
-
 func main() {
 
 	e := echo.New()
@@ -39,6 +17,7 @@ func main() {
 	if err != nil {
 		fmt.Sprintf("error get db: %s", err)
 	}
+	defer repository.ClosePool(db)
 
 	repos := repository.NewRepository(db)
 	services := service.NewService(repos)
