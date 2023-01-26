@@ -2,12 +2,12 @@ version: "3.9"
 services:
   app:
     build: .
-    image: vojnic/efpractice2:review
+    image: vojnic/efpractice2:psql2
     depends_on:
       postgres:
         condition: service_healthy
     ports:
-      - "3000:8080"
+      - "3000:5555"
     environment:
       - pUrl=postgres://postgres:postgres@host.docker.internal:5432/postgres?sslmode=disable
   postgres:

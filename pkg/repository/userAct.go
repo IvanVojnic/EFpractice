@@ -17,7 +17,7 @@ func NewUserActPostgres(db *pgxpool.Pool) *UserActPostgres {
 }
 
 func (r *UserActPostgres) CreateUser(ctx context.Context, user models.User) error {
-	err := r.db.QueryRow(ctx, "insert into user (name, age, isRegular, password) select $1, $2, $3, $4, $5",
+	err := r.db.QueryRow(ctx, "insert into users (name, age, regular, password) values $1, $2, $3, $4, $5",
 		user.UserName, user.UserAge, user.UserIsRegular, user.Password)
 	if err != nil {
 		return fmt.Errorf("Error while user creating: %v", err)
@@ -26,7 +26,7 @@ func (r *UserActPostgres) CreateUser(ctx context.Context, user models.User) erro
 }
 
 func (r *UserActPostgres) UpdateUser(ctx context.Context, user models.User) error {
-	res, err := r.db.Exec(ctx, "UPDATE user SET name = $1, age = $2, isRegular =$3 WHERE id = $4", user.UserName, user.UserAge, user.UserIsRegular, user.UserId)
+	res, err := r.db.Exec(ctx, "UPDATE users SET name = $1, age = $2, regular =$3 WHERE id = $4", user.UserName, user.UserAge, user.UserIsRegular, user.UserId)
 	if err != nil {
 		return err
 	}
@@ -37,7 +37,7 @@ func (r *UserActPostgres) UpdateUser(ctx context.Context, user models.User) erro
 func (r *UserActPostgres) GetUser(ctx context.Context, userId int) (models.User, error) {
 	//return s.repo.GetUser(userId)
 	user := models.User{}
-	err := r.db.QueryRow(ctx, "select * from user where id=$1 and not deleted", userId).Scan(
+	err := r.db.QueryRow(ctx, "select * from users where id=$1", userId).Scan(
 		&user.UserId, &user.UserName, &user.UserAge, &user.Password, &user.UserIsRegular)
 	if err != nil {
 		return user, err
@@ -46,7 +46,7 @@ func (r *UserActPostgres) GetUser(ctx context.Context, userId int) (models.User,
 }
 
 func (r *UserActPostgres) DeleteUser(ctx context.Context, userId int) error {
-	commandTag, err := r.db.Exec(context.Background(), "delete from user where id=$1", userId)
+	commandTag, err := r.db.Exec(ctx, "delete from users where id=$1", userId)
 	if err != nil {
 		return err
 	}

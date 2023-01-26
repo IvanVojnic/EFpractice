@@ -2,6 +2,7 @@ package handler
 
 import (
 	"EFpractic2/models"
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"log"
 	"net/http"
@@ -30,6 +31,7 @@ func (h *Handler) getUser(c echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest)
 	}
+	fmt.Sprintf("user: %s", user)
 	return c.JSON(http.StatusOK, user)
 }
 
