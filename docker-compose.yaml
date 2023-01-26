@@ -1,23 +1,21 @@
 version: "3.9"
 services:
   app:
-    image: efpractice2-app
     build: .
+    image: vojnic/efpractice2:review
     depends_on:
       postgres:
         condition: service_healthy
     ports:
       - "3000"
     environment:
-      POSTGRES_DB: "postgres"
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "qwerty"
+      - pUrl=postgres://postgres:postgres@host.docker.internal:5432/postgres?sslmode=disable
   postgres:
-    image: postgres:latest
+    image: postgres
     environment:
       POSTGRES_DB: "postgres"
       POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "qwerty"
+      POSTGRES_PASSWORD: "postgres"
     healthcheck:
       test: ["CMD", "pg_isready -U postgres -d postgres"]
       interval: 10s

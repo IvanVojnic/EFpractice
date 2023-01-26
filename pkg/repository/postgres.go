@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 	"fmt"
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type StorageConfig struct {
@@ -15,7 +15,7 @@ type StorageConfig struct {
 	Postgre_url string `json:'pUrl'`
 }
 
-func NewPostgresDB(cfg StorageConfig, ctx context.Context, maxAttempts int) (pool *pgxpool.Pool, err error) {
+func NewPostgresDB(cfg StorageConfig) (pool *pgxpool.Pool, err error) {
 	/*dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", cfg.Username, cfg.Password, cfg.Port, cfg.DBName)
 	utils.DoWithTries(func() error {
 		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
@@ -29,7 +29,7 @@ func NewPostgresDB(cfg StorageConfig, ctx context.Context, maxAttempts int) (poo
 	if err != nil {
 		log.Fatal("error to connect")
 	}*/
-	pool, err := pgxpool.New(context.Background(), cfg.Postgre_url)
+	pool, err = pgxpool.New(context.Background(), cfg.Postgre_url)
 	if err != nil {
 		return nil, fmt.Errorf("invalid configuration data: %v", err)
 	}
