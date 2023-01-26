@@ -5,4 +5,5 @@ type User struct {
 	UserName      string `json:"name" db:"name"`
 	UserAge       int    `json:"age" db:"age"`
 	UserIsRegular bool   `json:"isRegular" db:"isRegular"`
+	Password      string `json:"password" db:"password"`
 }

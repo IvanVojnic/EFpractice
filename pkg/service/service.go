@@ -3,14 +3,15 @@ package service
 import (
 	"EFpractic2/models"
 	"EFpractic2/pkg/repository"
+	"context"
 )
 
 type UserAct interface {
-	CreateUser(user models.User) error
-	UpdateUser(user models.User) error
-	GetUser(int) (models.User, error)
-	DeleteUser(int) error
-	GetAllUsers() ([]models.User, error)
+	CreateUser(context.Context, models.User) error
+	UpdateUser(context.Context, models.User) error
+	GetUser(context.Context, int) (models.User, error)
+	DeleteUser(context.Context, int) error
+	GetAllUsers(context.Context) ([]models.User, error)
 }
 
 type Service struct {

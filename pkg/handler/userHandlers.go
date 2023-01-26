@@ -15,7 +15,7 @@ func (h *Handler) createUser(c echo.Context) error {
 		log.Printf("faied %s", err)
 		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
-	err = h.services.UserAct.CreateUser(user)
+	err = h.services.UserAct.CreateUser(c.Request().Context(), user)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest)
 	}
@@ -26,7 +26,7 @@ func (h *Handler) getUser(c echo.Context) error {
 	userId := c.QueryParam("id")
 	var userIdNum int
 	userIdNum, _ = strconv.Atoi(userId)
-	user, err := h.services.UserAct.GetUser(userIdNum)
+	user, err := h.services.UserAct.GetUser(c.Request().Context(), userIdNum)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest)
 	}
@@ -40,7 +40,7 @@ func (h *Handler) updateUser(c echo.Context) error {
 		log.Printf("faied %s", err)
 		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
-	err = h.services.UserAct.UpdateUser(user)
+	err = h.services.UserAct.UpdateUser(c.Request().Context(), user)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest)
 	}
@@ -51,7 +51,7 @@ func (h *Handler) deleteUser(c echo.Context) error {
 	userId := c.QueryParam("id")
 	var userIdNum int
 	userIdNum, _ = strconv.Atoi(userId)
-	err := h.services.UserAct.DeleteUser(userIdNum)
+	err := h.services.UserAct.DeleteUser(c.Request().Context(), userIdNum)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest)
 	}
@@ -59,7 +59,7 @@ func (h *Handler) deleteUser(c echo.Context) error {
 }
 
 func (h *Handler) getAllUsers(c echo.Context) error {
-	err, users := h.services.UserAct.GetAllUsers()
+	err, users := h.services.UserAct.GetAllUsers(c.Request().Context())
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest)
 	}
