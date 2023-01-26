@@ -7,11 +7,10 @@ import (
 	"EFpractic2/pkg/service"
 	"context"
 	"fmt"
-	"github.com/caarlos0/env/v6"
 	"github.com/labstack/echo/v4"
 )
 
-type (
+/*type (
 	Config struct {
 		CurrentDB   string `env:"CURRENT_DB,notEmpty" envDefault:"postgres"`
 		PostgresUrl string `env:"POSTGRES_DB_URL,notEmpty"`
@@ -31,7 +30,7 @@ func NewConfig() (*Config, error) {
 	//Cfg.MongoURL = "_"
 	//Cfg.JwtKey = "874967EC3EA3490F8F2EF6478B72A756"
 	return Cfg, nil
-}
+}*/
 
 func main() {
 
@@ -49,6 +48,7 @@ func main() {
 	handlers.InitRoutes(e)
 }
 
+/*
 func DBConnection(Cfg *Config) (Repository, error) {
 	switch Cfg.CurrentDB {
 	case "postgres":
@@ -74,4 +74,4 @@ func ClosePool(Cfg *Config, r interface{}) {
 		}
 	case "mongo":
 	}
-}
+}*/
