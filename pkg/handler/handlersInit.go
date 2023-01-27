@@ -46,7 +46,7 @@ func (h *Handler) InitRoutes(router *echo.Echo) *echo.Echo {
 	rAct.GET("/get", h.getUser)
 	rAct.POST("/update", h.updateUser)
 	rAct.GET("/delete", h.deleteUser)
-	rAct.GET("/getAllUser", h.getAllUsers)
-	router.Logger.Fatal(router.Start(":5555"))
+	rAct.GET("/getAllUsers", h.getAllUsers)
+	router.Logger.Fatal(router.Start(":40000"))
 	return router
 }

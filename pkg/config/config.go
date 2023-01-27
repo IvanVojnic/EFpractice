@@ -1,5 +1,6 @@
 package config
 
+/*
 import (
 	"EFpractic2/pkg/repository"
 	"fmt"
@@ -23,3 +24,4 @@ func GetConfig() *Config {
 	})
 	return instance
 }
+*/

@@ -1,11 +1,9 @@
 package main
 
 import (
-	"EFpractic2/pkg/config"
 	"EFpractic2/pkg/handler"
 	"EFpractic2/pkg/repository"
 	"EFpractic2/pkg/service"
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	log "github.com/sirupsen/logrus"
@@ -29,13 +27,15 @@ func main() {
 		},
 	}))
 
-	cfg := config.GetConfig()
-	fmt.Sprintf("CFG IS - %s", cfg)
-	db, err := repository.NewPostgresDB(cfg.Storage)
+	/*cfg := config.GetConfig()
+	fmt.Sprintf("CFG IS - %s", cfg)*/
+	db, err := repository.NewPostgresDB()
 	if err != nil {
-		fmt.Sprintf("error get db: %s", err)
+		log.WithFields(log.Fields{
+			"Error connection to database rep.NewPostgresDB()": err,
+		}).Fatal("DB ERROR CONNECTION")
 	}
-	//defer repository.ClosePool(db)
+	defer repository.ClosePool(db)
 
 	repos := repository.NewRepository(db)
 	services := service.NewService(repos)

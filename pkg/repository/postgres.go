@@ -10,8 +10,9 @@ type StorageConfig struct {
 	Postgre_url string `json:"pUrl"`
 }
 
-func NewPostgresDB(cfg StorageConfig) (pool *pgxpool.Pool, err error) {
-	pool, err = pgxpool.New(context.Background(), cfg.Postgre_url)
+func NewPostgresDB() (pool *pgxpool.Pool, err error) {
+	//pool, err = pgxpool.New(context.Background(), "postgres://postgres:postgres@host.docker.internal:5432/postgres?sslmode=disable")
+	pool, err = pgxpool.New(context.Background(), "postgres://postgres:postgres@localhost:5432/postgres?sslmode=disable")
 	if err != nil {
 		return nil, fmt.Errorf("invalid configuration data: %v", err)
 	}
